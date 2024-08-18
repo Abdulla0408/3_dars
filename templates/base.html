@@ -1,0 +1,116 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+
+ 
+    <!--==============================
+      Hero Area
+    ==============================-->
+    
+<div class="  ">
+        
+    <div class="vs-hero-carousel hero-layout6" data-globalbgimage="{% static 'assets/img/nature.jpg' %}" data-height="810" data-container="1900" data-slidertype="responsive">
+
+        {% for banner in  banners %}
+        <div class="ls-slide" data-ls="duration:12000; transition2d:5; kenburnsscale:1.2;">
+            <p style="top:405px; left:375px; font-weight:700; background-size:inherit; background-position:inherit; font-size:65px; color:#fcd55c; font-family:'Advent Pro', sans-serif;" class="ls-l ls-hide-tablet ls-hide-phone" data-ls="offsetxin:-200; durationin:1500; easingin:easeOutQuint;">{{ banner.title }}</p>
+            <p style="top:405px; left:375px; font-weight:700; background-size:inherit; background-position:inherit; font-size:65px; color:#fcd55c; font-family:'Advent Pro', sans-serif;" class="ls-l ls-hide-tablet ls-hide-phone" data-ls="offsetxin:-200; durationin:1500; easingin:easeOutQuint;">{{ banner.sub_title }}</p>
+            <div style="top:611px; left:375px; background-size:inherit; background-position:inherit;" class="ls-l ls-hide-tablet ls-hide-phone" data-ls="offsetyin:100; durationin:1500; delayin:800; easingin:easeOutQuint; offsetyout:200; durationout:1500; easingout:easeOutQuint;">
+            {% if user.is_authenticated %}
+            <a href="{% url 'banner_list' %}" class="vs-btn style5 ls-btn">Add banner<i class="far fa-angle-right"></i></a></div>
+            {% endif %}
+            <img width="658" height="543" src="{{ banner.img.url }}" class="ls-l ls-hide-deskto" alt="image" style="top: 180px; left:916px; background-size:inherit; background-position:inherit; width:800px; height:600px;">
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+    <!--==============================
+    Categories Area
+    ==============================-->
+<section class="space-top">
+    
+    <div class="container">
+        <div class="row vs-carousel" data-slide-show="3" id="catboxSlide4645">
+            {% for category in categories %}
+            <div class="col-xl-4">
+                <div class="cat-box">
+                    <div class="cat-box__img">
+                        <img src="{{ category.img.url }}" alt="{{ category.name }}">
+                    </div>
+                    <h3 class="cat-box__title"><a href="{% url 'category_detail' category.pk %}">{{ category.name }}</a></h3>
+                    <p class="cat-box__text">{{ category.title|truncatechars:100 }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row text-center justify-content-around align-items-center">
+            <div class="col-auto d-none d-sm-block">
+                <button class="slick-arrow" data-slick-prev="#catboxSlide4645" type="button"><i class="fas fa-angle-left"></i></button>
+            </div>
+            <div class="col-auto">
+                <a href="{% url 'category_list' %}" class="vs-btn style3">View All Categories<i class="fas fa-angle-right"></i></a>
+            </div>
+            <div class="col-auto d-none d-sm-block">
+                <button class="slick-arrow" data-slick-next="#catboxSlide4645" type="button"><i class="fas fa-angle-right"></i></button>
+            </div>
+        </div>
+    </div>
+</section>
+    <!--==============================
+    Feature Products
+    ==============================-->
+    <section class="sec-bg3 vs-shop-wrapper" data-bg-src="{% static 'assets/img/shape/bg-00778.png' %}">
+        <div class="section-title text-center">
+            <div class="sec-icon"><img src="{% static 'assets/img/icons/sec-icon-2.png' %}" alt="icon"></div>
+            <span class="sub-title4">Latest Arrivals</span>
+            <h2 class="sec-title3">Feature Products</h2>
+        </div>
+        <div class="container position-relative">
+            <div class="row gx-2px justify-content-center">
+                {% for product in products %}
+                <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                    <div class="vs-product-box3">
+                        <div class="product-img">
+                            <a href="{% url 'product_detail' product.id %}"><img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-100"></a>
+                            {% if product.is_new %}
+                                <span class="product-tag2">New</span>
+                            {% endif %}
+                            {% if product.is_sale %}
+                                <span class="product-tag3">Sale</span>
+                            {% endif %}
+                        </div>
+                        <div class="actions-btn">
+                            <a href="{{ product.image.url }}" class="icon-btn popup-image"><i class="far fa-search"></i></a>
+                            <a href="{% url 'add_to_wishlist' product.id %}" class="icon-btn"><i class="fal fa-heart"></i></a>
+                            <a href="{% url 'add_to_cart' product.id %}" class="vs-btn style4 cart-btn"><i class="fal fa-cart-plus"></i>Add To Cart</a>
+                        </div>
+                        <div class="product-content">
+                            <div class="product-rating-box">
+                                {{ product.average_rating|floatformat:1 }}
+                                <div class="star-rating" role="img" aria-label="Rated {{ product.average_rating|floatformat:2 }} out of 5">
+                                    <span style="width:{{ product.average_rating_percentage }}%">Rated <strong class="rating">{{ product.average_rating|floatformat:2 }}</strong> out of 5</span>
+                                </div>
+                            </div>
+                            <h4 class="product-title"><a href="{% url 'product_detail' product.id %}">{{ product.name }}</a></h4>
+                            <span class="price">
+                                <strong>${{ product.price|floatformat:2 }}</strong>
+                                {% if product.old_price %}
+                                    <del>${{ product.old_price|floatformat:2 }}</del>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="bottom-btn">
+                <a href="{% url 'product_list' %}" class="vs-btn style3">All Products<i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock content %}

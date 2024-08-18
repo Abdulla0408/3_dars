@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Banner List</h1>
+    
+    {% if banners %}
+        <div class="row">
+            {% for banner in banners %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        {% if banner.img %}
+                            <img src="{{ banner.img.url }}" class="card-img-top" alt="{{ banner.title }}">
+                        {% else %}
+                            <img src="{% static 'path/to/default/image.jpg' %}" class="card-img-top" alt="Default Image">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ banner.title }}</h5>
+                            {% if banner.sub_title %}
+                                <p class="card-text">{{ banner.sub_title }}</p>
+                            {% endif %}
+                            <p class="card-text"><small class="text-muted">Active: {{ banner.is_active|yesno:"Yes,No" }}</small></p>
+                            <a href="{% url 'banner_detail' pk=banner.pk %}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No banners available.</p>
+    {% endif %}
+
+    <a href="{% url 'banner_create' %}" class="btn btn-success mt-3 md-5">Create New Banner</a>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-lg-5 mt-3">
+    <h2>Order Confirmation</h2>
+    {% if order %}
+        <div class="alert alert-success" role="alert">
+            Thank you for your order! Your order has been successfully placed.
+        </div>
+        <h3>Order Details</h3>
+        <p><strong>Order Date:</strong> {{ order.shopping_date }}</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cart_product in order.cart_products.all %}
+                <tr>
+                    <td>{{ cart_product.product.name }}</td>
+                    <td>{{ cart_product.quantity }}</td>
+                    <td>${{ cart_product.product.price }}</td>
+                    <td>${{ cart_product.total_price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            No order found. Please check your order history or contact customer support.
+        </div>
+    {% endif %}
+    <a href="{% url 'main' %}" class="btn btn-primary mt-3">Continue Shopping</a>
+</div>
+{% endblock %}

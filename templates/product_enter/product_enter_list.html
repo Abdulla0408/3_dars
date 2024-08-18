@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Product Entries</h2>
+    <a href="{% url 'product_enter_create' %}" class="btn btn-primary mb-3">Add New Product Entry</a>
+    
+    {% if products %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product_enter in products %}
+                    <tr>
+                        <td>{{ product_enter.product.name }}</td>
+                        <td>{{ product_enter.quantity }}</td>
+                        <td>{{ product_enter.date|date:"Y-m-d" }}</td>
+                        <td>{{ product_enter.description|truncatewords:10 }}</td>
+                        <td>
+                            <a href="{% url 'product_enter_detail' product_enter.pk %}" class="btn btn-sm btn-info">View</a>
+                            <a href="{% url 'product_enter_update' product_enter.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{% url 'product_enter_delete' product_enter.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No product entries available.</p>
+    {% endif %}
+</div>
+{% endblock %}

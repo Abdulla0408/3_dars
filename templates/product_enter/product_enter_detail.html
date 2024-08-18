@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Product Entry Details</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ product_enter.product.name }}</h5>
+            <p class="card-text"><strong>Quantity:</strong> {{ product_enter.quantity }}</p>
+            <p class="card-text"><strong>Price:</strong> ${{ product_enter.price }}</p>
+            <p class="card-text"><strong>Date Added:</strong> {{ product_enter.date_added }}</p>
+        </div>
+    </div>
+    <div class="mt-3">
+        <a href="{% url 'product_enter_update' product_enter.pk %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'product_enter_delete' product_enter.pk %}" class="btn btn-danger">Delete</a>
+        <a href="{% url 'product_enter_list' %}" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+{% endblock %}

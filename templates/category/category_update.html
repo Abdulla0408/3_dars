@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="vs-product-wrapper space-top space-md-bottom">
+    <div class="container">
+        <div class="section-title text-center">
+            <h2 class="sec-title3">Update Category</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form method="post" enctype="multipart/form-data" class="vs-form">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">Category Name</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="mb-4">
+                        <label for="{{ form.title.id_for_label }}" class="form-label">Category Title</label>
+                        {{ form.title }}
+                    </div>
+                    <div class="mb-4">
+                        <label for="{{ form.img.id_for_label }}" class="form-label">Category Image</label>
+                        {{ form.img }}
+                        {% if category.img %}
+                            <p class="mt-2">Current image: <img src="{{ category.img.url }}" alt="{{ category.name }}" class="img-thumbnail" style="max-width: 100px;"></p>
+                        {% endif %}
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="vs-btn style3">Update Category<i class="fas fa-save"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+

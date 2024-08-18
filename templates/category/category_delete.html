@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="vs-product-wrapper space-top space-md-bottom">
+    <div class="container">
+        <div class="section-title text-center">
+            <h2 class="sec-title3">Delete Category</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4"> "{{ category.name }} nomli kategoriyani o'chirishni xohlaysizmi?</h5>
+                        <form method="post">
+                            {% csrf_token %}
+                            <p class="mb-4">O'chirishni xohlamasangiz ORTGA tugmasini bosing.</p>
+                            <p class="mb-4">Barcha productlar bilan birga kategoriyasini ham o'chirishni istasangiz O'CHIRISH tugmasini bosing!</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="{% url 'category_detail' category.pk %}" class="vs-btn style3">ORTGA</a>
+                                <button type="submit" class="vs-btn style3 btn-danger">O'CHIRISH</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

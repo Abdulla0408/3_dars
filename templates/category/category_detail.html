@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="vs-product-wrapper space-top space-md-bottom">
+    <div class="container">
+        <div class="section-title text-center">
+            <h2 class="sec-title3">{{ category.name }}</h2>
+            <p class="sec-text">{{ category.title }}</p>
+        </div>
+        <div class="row">
+            {% if category.img %}
+            <div class="col-lg-6 mb-4">
+                <img src="{{ category.img.url }}" alt="{{ category.name }}" class="img-fluid rounded">
+            </div>
+            {% endif %}
+            <div class="col-lg-6">
+                <h3 class="mb-4">Products in this category:</h3>
+                {% if products %}
+                    <div class="row">
+                        {% for product in products %}
+                        <div class="col-md-6 mb-4">
+                            <div class="vs-product-box">
+                                
+                                <div class="product-content">
+                                    <h4 class="product-title"><a href="#">{{ product.name }}</a></h4>
+                                    <p class="product-price">${{ product.price }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No products available in this category.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="text-center mt-4">
+            <a href="{% url 'category_update' category.pk %}" class="vs-btn style3 me-3">Edit Category<i class="fas fa-edit"></i></a>
+            <a href="{% url 'category_delete' category.pk %}" class="vs-btn style3">Delete Category<i class="fas fa-trash"></i></a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

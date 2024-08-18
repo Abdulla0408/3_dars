@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h3 class="mb-0">{{ info.title }}</h3>
+                </div>
+                <div class="card-body">
+                    <p class="lead">{{ info.description }}</p>
+                    {% if info.image %}
+                        <img src="{{ info.image.url }}" alt="{{ info.title }}" class="img-fluid mb-3">
+                    {% endif %}
+                    <p><strong>Created at:</strong> {{ info.created_at }}</p>
+                    <p><strong>Updated at:</strong> {{ info.updated_at }}</p>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'info_list' %}" class="btn btn-secondary">Back to List</a>
+                        {% if user.is_authenticated %}
+                            <div>
+                                <a href="{% url 'info_update' info.pk %}" class="btn btn-primary">Edit</a>
+                                <a href="{% url 'info_delete' info.pk %}" class="btn btn-danger">Delete</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

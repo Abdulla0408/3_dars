@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="mb-0">Delete Banner</h2>
+                </div>
+                <div class="card-body">
+                    <h4>Are you sure you want to delete the banner "{{ banner.title }}"?</h4>
+                    {% if banner.img %}
+                        <img src="{{ banner.img.url }}" class="img-fluid mt-3 mb-3" alt="{{ banner.title }}" style="max-height: 200px;">
+                    {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger mr-2">Confirm Delete</button>
+                        <a href="{% url 'banner_detail' pk=banner.pk %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

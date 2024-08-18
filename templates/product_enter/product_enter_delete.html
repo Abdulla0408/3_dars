@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Delete Product Entry</h2>
+    <p>Are you sure you want to delete the following product entry?</p>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">{{ product_enter.product.name }}</h5>
+            <p class="card-text"><strong>Quantity:</strong> {{ product_enter.quantity }}</p>
+            <p class="card-text"><strong>Price:</strong> ${{ product_enter.price }}</p>
+            <p class="card-text"><strong>Date Added:</strong> {{ product_enter.date_added }}</p>
+        </div>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+        <a href="{% url 'product_enter_detail' product_enter.pk %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

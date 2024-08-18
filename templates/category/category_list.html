@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="vs-product-wrapper space-top space-md-bottom">
+    <div class="container">
+        <div class="section-title text-center">
+            <h2 class="sec-title3">Categories</h2>
+        </div>
+        <div class="row">
+            {% for category in categories %}
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="vs-product-box">
+                    <div class="product-img">
+                        <a href="{% url 'category_detail' category.pk %}">
+                            <img src="{{ category.img.url }}" alt="{{ category.name }}" class="w-100">
+                        </a>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title"><a href="{% url 'category_detail' category.pk %}">{{ category.name }}</a></h3>
+                        <p class="product-text">{{ category.title|truncatechars:50 }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <p class="text-center">No categories available.</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% if user.is_authenticated %}
+        <div class="text-center mt-4">
+            <a href="{% url 'category_create' %}" class="vs-btn style3">Add New Category<i class="fas fa-plus"></i></a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

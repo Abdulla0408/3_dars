@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="vs-product-wrapper space-top space-md-bottom" style="background-color: #f8f9fa;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="section-title text-center">
+                    <h2 class="sec-title3" style="color: #4a4a4a;">Delete Product</h2>
+                </div>
+                <div class="delete-confirmation" style="background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+                    <p class="text-center mb-4">Are you sure you want to delete the product "{{ product.name }}"?</p>
+                    <form method="post" class="text-center">
+                        {% csrf_token %}
+                        <button type="submit" class="vs-btn style2" style="background-color: #dc3545; border-color: #dc3545;">Confirm Delete</button>
+                        <a href="{% url 'product_detail' product.pk %}" class="vs-btn style2" style="background-color: #6c757d; border-color: #6c757d;">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

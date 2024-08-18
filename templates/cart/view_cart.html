@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-lg-5 mt-3">
+    <h2>Your Shopping Cart</h2>
+    {% if cart_products %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cart_product in cart_products %}
+                <tr>
+                    <td>{{ cart_product.product.name }}</td>
+                    <td>${{ cart_product.product.price }}</td>
+                    <td>
+                        <form method="post" action="{% url 'update_cart_quantity' cart_product.id %}">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" value="{{ cart_product.quantity }}" min="1" class="form-control" style="width: 70px;">
+                            <button type="submit" class="btn btn-sm btn-primary mt-2">Update</button>
+                        </form>
+                    </td>
+                    <td>${{ cart_product.total_price }}</td>
+                    <td>
+                        <a href="{% url 'remove_from_cart' cart_product.id %}" class="btn btn-sm btn-danger">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-right">
+            <h4>Total: ${{ total_price }}</h4>
+            <a href="{% url 'checkout' %}" class="btn btn-success">Proceed to Checkout</a>
+        </div>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}

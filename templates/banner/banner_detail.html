@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">{{ banner.title }}</h2>
+                </div>
+                <div class="card-body">
+                    {% if banner.img %}
+                        <img src="{{ banner.img.url }}" class="img-fluid mb-3" alt="{{ banner.title }}">
+                    {% else %}
+                        <img src="{% static 'path/to/default/image.jpg' %}" class="img-fluid mb-3" alt="Default Image">
+                    {% endif %}
+                    
+                    {% if banner.sub_title %}
+                        <h4 class="text-muted mb-3">{{ banner.sub_title }}</h4>
+                    {% endif %}
+                    
+                    <p class="card-text"><strong>Status:</strong> {{ banner.is_active|yesno:"Active,Inactive" }}</p>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'banner_update' pk=banner.pk %}" class="btn btn-warning mr-2">Edit</a>
+                        <a href="{% url 'banner_delete' pk=banner.pk %}" class="btn btn-danger mr-2">Delete</a>
+                        <a href="{% url 'banner_list' %}" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
